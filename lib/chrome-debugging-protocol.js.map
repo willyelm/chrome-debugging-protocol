@@ -1,0 +1,1 @@
+{"version":3,"file":"chrome-debugging-protocol.js","sourceRoot":"","sources":["../src/chrome-debugging-protocol.ts"],"names":[],"mappings":"AAAA;CAEC","sourcesContent":["class ChromeDebuggingProtocol {\n\n}\n"]}

@@ -1,0 +1,23 @@
+{
+  "name": "chrome-debugging-protocol",
+  "version": "0.0.1",
+  "author": "Williams Medina <williams.medinaa@gmail.com>",
+  "description": "Chrome Debugging Protocol Client for NodeJS",
+  "keywords": [
+    "chrome",
+    "debugging",
+    "protocol",
+    "nodejs",
+    "javascript",
+    "typescript"
+  ],
+  "scripts": {
+    "start": "tsc -w"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/willyelm/chrome-debugging-protocol",
+  "main": "./lib/chrome-debugging-protocol",
+  "devDependencies": {
+    "typescript": "^2.2.2"
+  }
+}
