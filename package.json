@@ -12,12 +12,17 @@
     "typescript"
   ],
   "scripts": {
-    "start": "tsc -w"
+    "start": "tsc -w -project src/tsconfig.json"
   },
   "license": "MIT",
   "repository": "https://github.com/willyelm/chrome-debugging-protocol",
   "main": "./lib/chrome-debugging-protocol",
   "devDependencies": {
     "typescript": "^2.2.2"
+  },
+  "dependencies": {
+    "@types/node": "^7.0.12",
+    "@types/ws": "0.0.39",
+    "ws": "^2.2.2"
   }
 }
