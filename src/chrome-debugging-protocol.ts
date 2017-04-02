@@ -1,23 +1,12 @@
 import { EventEmitter }  from 'events'
-import { ConsoleDomain } from './domain/console'
+import { Domains } from './domain/index'
+import { ChromeDebuggingRequester } from './chrome-debugging-requester'
 import * as WebSocket from 'ws'
-
-export interface ChromeDebuggingDomains {
-  Console: ConsoleDomain
-}
-
-export interface ChromeDebuggingSubscription {
-  resolve: Function,
-  reject: Function
-}
-
-export type ChromeDebuggingSubscriptions = Array<ChromeDebuggingSubscription>
 
 export class ChromeDebuggingProtocol {
   private socket: WebSocket
   private event: EventEmitter
-  private nextRequestId: number = 0
-  private subscriptions: ChromeDebuggingSubscriptions = []
+  private requester: ChromeDebuggingRequester
   constructor (private socketUrl: string) {
     this.event = new EventEmitter()
   }
@@ -31,7 +20,7 @@ export class ChromeDebuggingProtocol {
     this.socket.close()
     this.event.emit('didClose')
   }
-  connect (): Promise<ChromeDebuggingDomains> {
+  connect (): Promise<Domains> {
     return new Promise((resolve, reject) => {
       this.socket = new WebSocket(this.socketUrl)
       this.socket.on('error', reject)
@@ -40,19 +29,11 @@ export class ChromeDebuggingProtocol {
         this.socket.on('error', (error) => {
           this.event.emit('didReceiveError', error)
         })
-        let domains: ChromeDebuggingDomains = {
-          Console: new ConsoleDomain()
-        }
+        this.requester = new ChromeDebuggingRequester(this.socket)
+        let domains = this.requester.getDomains()
         resolve(domains)
-      })
-      this.socket.on('message', (message) => {
-        let response = JSON.parse(message)
-        this.handleResponse(response)
       })
       this.socket.on('close', () => this.event.emit('didClose'))
     })
-  }
-  handleResponse (response: any) {
-
   }
 }

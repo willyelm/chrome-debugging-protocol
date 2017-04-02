@@ -1,0 +1,1 @@
+{"version":3,"file":"page.js","sourceRoot":"","sources":["../../src/domain/page.ts"],"names":[],"mappings":";;AAAA,mCAAsC;AAGtC,gBAAwB,SAAQ,qBAAY;IAC1C,YAAqB,SAAmC;QACtD,KAAK,EAAE,CAAA;QADY,cAAS,GAAT,SAAS,CAA0B;IAExD,CAAC;IACD,UAAU;IACV,QAAQ,CAAE,MAAc;QACtB,MAAM,CAAC,IAAI,CAAC,SAAS,CAAC,IAAI,CAAC,eAAe,EAAE,MAAM,CAAC,CAAA;IACrD,CAAC;CACF;AARD,gCAQC"}
