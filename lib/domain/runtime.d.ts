@@ -1,4 +1,29 @@
 import { ChromeDebuggingDomain } from '../chrome-debugging-domain';
+export declare type ScriptId = string;
+export declare type RemoteObjectId = string;
+export declare type UnserializableValue = string;
+export interface RuntimeCallFrame {
+    functionName: string;
+    scriptId: ScriptId;
+    url: string;
+    lineNumber: number;
+    columnNumber: number;
+}
+export interface StackTrace {
+    description?: string;
+    callFrames: Array<RuntimeCallFrame>;
+    parent: StackTrace;
+    promiseCreationFrame?: RuntimeCallFrame;
+}
+export interface RemoteObject {
+    type: string;
+    subtype?: string;
+    className?: string;
+    value?: any;
+    unserializableValue?: UnserializableValue;
+    description?: string;
+    objectId: RemoteObjectId;
+}
 export declare class RuntimeDomain extends ChromeDebuggingDomain {
     evaluate(params: {
         expression: string;
@@ -10,12 +35,12 @@ export declare class RuntimeDomain extends ChromeDebuggingDomain {
         generatePreview?: boolean;
         userGesture?: boolean;
         awaitPromise?: boolean;
-    }): Promise<{}>;
+    }): Promise<any>;
     awaitPromise(params: {
         promiseObjectId: string;
         returnByValue?: boolean;
         generatePreview?: boolean;
-    }): Promise<{}>;
+    }): Promise<any>;
     callFunctionOn(params: {
         objectId: string;
         functionDeclaration: string;
@@ -29,29 +54,29 @@ export declare class RuntimeDomain extends ChromeDebuggingDomain {
         generatePreview?: boolean;
         userGesture?: boolean;
         awaitPromise?: boolean;
-    }): Promise<{}>;
+    }): Promise<any>;
     getProperties(params: {
         objectId: string;
         ownProperties?: boolean;
         accessorPropertiesOnly?: boolean;
         generatePreview?: boolean;
-    }): Promise<{}>;
+    }): Promise<any>;
     releaseObject(params: {
         objectId: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     releaseObjectGroup(params: {
         objectGroup: string;
-    }): Promise<{}>;
-    runIfWaitingForDebugger(): Promise<{}>;
-    enable(): Promise<{}>;
-    disable(): Promise<{}>;
-    discardConsoleEntries(): Promise<{}>;
+    }): Promise<any>;
+    runIfWaitingForDebugger(): Promise<any>;
+    enable(): Promise<any>;
+    disable(): Promise<any>;
+    discardConsoleEntries(): Promise<any>;
     compileScript(params: {
         expression: string;
         sourceURL: string;
         persistScript: boolean;
         executionContextId?: number;
-    }): Promise<{}>;
+    }): Promise<any>;
     runScript(params: {
         scriptId: string;
         executionContextId?: string;
@@ -61,7 +86,7 @@ export declare class RuntimeDomain extends ChromeDebuggingDomain {
         returnByValue?: boolean;
         generatePreview?: boolean;
         awaitPromise?: boolean;
-    }): Promise<{}>;
+    }): Promise<any>;
     executionContextCreated(cb: Function): this;
     executionContextDestroyed(cb: Function): this;
     executionContextsCleared(cb: Function): this;

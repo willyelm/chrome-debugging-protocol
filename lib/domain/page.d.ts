@@ -1,18 +1,21 @@
 import { ChromeDebuggingDomain } from '../chrome-debugging-domain';
 export declare class PageDomain extends ChromeDebuggingDomain {
-    enable(): Promise<{}>;
-    disable(): Promise<{}>;
+    enable(): Promise<any>;
+    disable(): Promise<any>;
     reload(params: {
         ignoreCache?: boolean;
         scriptToEvaluateOnLoad?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     navigate(params: {
         url: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     handleJavaScriptDialog(params: {
         accept: boolean;
         promptText?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
+    setOverlayMessage(params: {
+        message: string;
+    }): Promise<any>;
     domContentEventFired(cb: Function): this;
     loadEventFired(cb: Function): this;
     frameAttached(cb: Function): this;

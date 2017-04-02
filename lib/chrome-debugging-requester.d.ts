@@ -19,5 +19,5 @@ export declare class ChromeDebuggingRequester {
     constructor(socket: WebSocket);
     getDomains(): Domains;
     responseHandler(response: any): void;
-    send(method: string, params?: any): Promise<{}>;
+    send(method: string, params?: any): Promise<any>;
 }

@@ -1,4 +1,29 @@
 import { ChromeDebuggingDomain } from '../chrome-debugging-domain'
+import { ScriptId, RemoteObject } from './runtime'
+
+export type BreakpointId = string
+export type CallFrameId = string
+export interface Location {
+  scriptId: ScriptId,
+  lineNumber: number,
+  columnNumber?: number
+}
+export interface Scope {
+  type: string,
+  object: RemoteObject,
+  name?: string,
+  startLocation?: Location,
+  endLocation?: Location
+}
+export interface DebuggerCallFrame {
+  callFrameId: CallFrameId,
+  functionName: string,
+  functionLocation?: Location,
+  location: Location
+  scopeChain: Array<Scope>,
+  this: RemoteObject,
+  returnValue: RemoteObject
+}
 
 export class DebuggerDomain extends ChromeDebuggingDomain {
   // methods
@@ -24,13 +49,19 @@ export class DebuggerDomain extends ChromeDebuggingDomain {
     urlRegex?: string,
     columnNumber?: number,
     condition?: string
-  }) {
+  }): Promise<{
+    breakpointId: BreakpointId,
+    locations: Array<Location>
+  }> {
     return this.send('setBreakpointByUrl', params)
   }
   setBreakpoint (params: {
     location: string,
     condition?: string
-  }) {
+  }): Promise<{
+    breakpointId: BreakpointId,
+    actualLocation: Location
+  }> {
     return this.send('setBreakpoint', params)
   }
   removeBreakpoint (params: {

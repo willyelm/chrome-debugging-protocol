@@ -1,5 +1,34 @@
 import { ChromeDebuggingDomain } from '../chrome-debugging-domain'
 
+export type ScriptId = string
+export type RemoteObjectId = string
+export type UnserializableValue = string
+
+export interface RuntimeCallFrame {
+  functionName: string,
+  scriptId: ScriptId,
+  url: string,
+  lineNumber: number,
+  columnNumber: number
+}
+
+export interface StackTrace {
+  description?: string,
+  callFrames: Array<RuntimeCallFrame>,
+  parent: StackTrace,
+  promiseCreationFrame?: RuntimeCallFrame
+}
+
+export interface RemoteObject {
+  type: string,
+  subtype?: string,
+  className?: string,
+  value?: any,
+  unserializableValue?: UnserializableValue,
+  description?: string,
+  objectId: RemoteObjectId
+}
+
 export class RuntimeDomain extends ChromeDebuggingDomain {
   // methods
   evaluate (params: {

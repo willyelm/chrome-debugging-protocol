@@ -25,6 +25,11 @@ export class PageDomain extends ChromeDebuggingDomain {
   }) {
     return this.send('handleJavaScriptDialog', params)
   }
+  setOverlayMessage (params: {
+    message: string
+  }) {
+    return this.send('setOverlayMessage', params)
+  }
   // events
   domContentEventFired (cb: Function) {
     return this.addListener('domContentEventFired', cb)

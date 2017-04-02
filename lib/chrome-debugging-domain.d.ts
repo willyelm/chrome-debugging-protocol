@@ -6,5 +6,5 @@ export declare class ChromeDebuggingDomain extends EventEmitter {
     private domainName;
     constructor(requester: ChromeDebuggingRequester);
     setDomainFromClass(): void;
-    send(method: string, params?: Object): Promise<{}>;
+    send(method: string, params?: Object): Promise<any>;
 }

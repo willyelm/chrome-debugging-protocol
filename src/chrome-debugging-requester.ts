@@ -55,14 +55,17 @@ export class ChromeDebuggingRequester {
       let parse = String(response.method).split('.')
       let domainName = parse[0]
       let methodName = parse[1]
-      if (this.domains[domainName]) {
-        this.domains[domainName].emit(methodName, response.params)
+      let domain = this.domains[domainName]
+      if (domain) {
+        this.domains[domainName].emit(methodName, response.params as {
+          testName?: string
+        })
       } else {
         // console.log('unhandled', response)
       }
     }
   }
-  send (method: string, params?: any) {
+  send (method: string, params?: any): Promise<any> {
     return new Promise((resolve, reject) => {
       let options: ChromeDebuggingRequest = {
         id: this.nextRequestId,
