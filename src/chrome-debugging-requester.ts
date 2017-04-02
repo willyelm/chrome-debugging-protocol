@@ -3,7 +3,9 @@ import {
   Domains,
   ConsoleDomain,
   PageDomain,
-  DebuggerDomain
+  DebuggerDomain,
+  RuntimeDomain,
+  ProfilerDomain
 } from './domain/index'
 
 export interface ChromeDebuggingSubscription {
@@ -27,7 +29,9 @@ export class ChromeDebuggingRequester {
     this.domains = {
       Console: new ConsoleDomain(this),
       Page: new PageDomain(this),
-      Debugger: new DebuggerDomain(this)
+      Debugger: new DebuggerDomain(this),
+      Runtime: new RuntimeDomain(this),
+      Profiler: new ProfilerDomain(this)
     }
     socket.on('message', (message) => {
       let response = JSON.parse(message)
@@ -52,7 +56,7 @@ export class ChromeDebuggingRequester {
       let domainName = parse[0]
       let methodName = parse[1]
       if (this.domains[domainName]) {
-        this.domains[domainName].emit(methodName)
+        this.domains[domainName].emit(methodName, response.params)
       } else {
         // console.log('unhandled', response)
       }

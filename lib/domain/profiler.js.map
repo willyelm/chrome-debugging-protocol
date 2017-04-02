@@ -1,1 +1,1 @@
-{"version":3,"file":"profiler.js","sourceRoot":"","sources":["../../src/domain/profiler.ts"],"names":[],"mappings":""}
+{"version":3,"file":"profiler.js","sourceRoot":"","sources":["../../src/domain/profiler.ts"],"names":[],"mappings":";;AAAA,wEAAkE;AAElE,oBAA4B,SAAQ,+CAAqB;IACvD,UAAU;IACV,MAAM;QACJ,MAAM,CAAC,IAAI,CAAC,IAAI,CAAC,QAAQ,CAAC,CAAA;IAC5B,CAAC;IACD,mBAAmB,CAAE,MAAc;QACjC,MAAM,CAAC,IAAI,CAAC,IAAI,CAAC,qBAAqB,EAAE,MAAM,CAAC,CAAA;IACjD,CAAC;CAKF;AAZD,wCAYC"}

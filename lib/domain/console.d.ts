@@ -1,10 +1,5 @@
-/// <reference types="node" />
-import { EventEmitter } from 'events';
-import { ChromeDebuggingRequester } from '../chrome-debugging-requester';
-export declare class ConsoleDomain extends EventEmitter {
-    private requester;
-    private domainName;
-    constructor(requester: ChromeDebuggingRequester);
+import { ChromeDebuggingDomain } from '../chrome-debugging-domain';
+export declare class ConsoleDomain extends ChromeDebuggingDomain {
     enable(): Promise<{}>;
-    messageAdded(cb: Function): Promise<{}>;
+    messageAdded(cb: Function): this;
 }

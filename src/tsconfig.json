@@ -5,6 +5,7 @@
     "declaration": true,
     "sourceMap": true,
     "noImplicitAny": false,
+    "lib": ["es6"],
     "outDir": "../lib",
     "typeRoots": ["../node_modules/@types"]
   },

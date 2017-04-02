@@ -1,12 +1,8 @@
-import { EventEmitter }  from 'events'
-import { ChromeDebuggingRequester } from '../chrome-debugging-requester'
+import { ChromeDebuggingDomain } from '../chrome-debugging-domain'
 
-export class PageDomain extends EventEmitter {
-  constructor (private requester: ChromeDebuggingRequester) {
-    super()
-  }
+export class PageDomain extends ChromeDebuggingDomain {
   // methods
   navigate (params: Object) {
-    return this.requester.send('Page.navigate', params)
+    return this.send('navigate', params)
   }
 }

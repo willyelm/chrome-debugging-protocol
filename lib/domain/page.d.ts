@@ -1,8 +1,4 @@
-/// <reference types="node" />
-import { EventEmitter } from 'events';
-import { ChromeDebuggingRequester } from '../chrome-debugging-requester';
-export declare class PageDomain extends EventEmitter {
-    private requester;
-    constructor(requester: ChromeDebuggingRequester);
+import { ChromeDebuggingDomain } from '../chrome-debugging-domain';
+export declare class PageDomain extends ChromeDebuggingDomain {
     navigate(params: Object): Promise<{}>;
 }

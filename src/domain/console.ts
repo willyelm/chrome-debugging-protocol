@@ -1,17 +1,12 @@
-import { EventEmitter }  from 'events'
-import { ChromeDebuggingRequester } from '../chrome-debugging-requester'
+import { ChromeDebuggingDomain } from '../chrome-debugging-domain'
 
-export class ConsoleDomain extends EventEmitter {
-  private domainName: string = 'Console'
-  constructor (private requester: ChromeDebuggingRequester) {
-    super()
-  }
+export class ConsoleDomain extends ChromeDebuggingDomain {
   // methods
   enable () {
-    return this.requester.send(`${this.domainName}.enable`)
+    return this.send('enable')
   }
   // events
   messageAdded (cb: Function) {
-    return this.requester.send(`${this.domainName}.messageAdded`, cb)
+    return this.addListener('messageAdded', cb)
   }
 }
