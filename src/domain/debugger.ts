@@ -5,11 +5,43 @@ export class DebuggerDomain extends ChromeDebuggingDomain {
   enable () {
     return this.send('enable')
   }
-  resume () {
-    return this.send('resume')
+  disable () {
+    return this.send('disable')
   }
-  pause () {
-    return this.send('pause')
+  setBreakpointsActive (params: {
+    active: boolean
+  }) {
+    return this.send('setBreakpointsActive', params)
+  }
+  setSkipAllPauses (params: {
+    skip: boolean
+  }) {
+    return this.send('setSkipAllPauses', params)
+  }
+  setBreakpointByUrl (params: {
+    lineNumber: number,
+    url?: string,
+    urlRegex?: string,
+    columnNumber?: number,
+    condition?: string
+  }) {
+    return this.send('setBreakpointByUrl', params)
+  }
+  setBreakpoint (params: {
+    location: string,
+    condition?: string
+  }) {
+    return this.send('setBreakpoint', params)
+  }
+  removeBreakpoint (params: {
+    breakpointId: string
+  }) {
+    return this.send('removeBreakpoint', params)
+  }
+  continueToLocation (params: {
+    location: string
+  }) {
+    return this.send('continueToLocation', params)
   }
   stepOver () {
     return this.send('stepOver')
@@ -20,35 +52,80 @@ export class DebuggerDomain extends ChromeDebuggingDomain {
   stepOut () {
     return this.send('stepOut')
   }
-  setPauseOnExceptions (params: Object) {
+  pause () {
+    return this.send('pause')
+  }
+  resume () {
+    return this.send('resume')
+  }
+  setScriptSource (params: {
+    scriptId: string,
+    scriptSource: string,
+    dryRun?: boolean
+  }) {
+    return this.send('setScriptSource', params)
+  }
+  restartFrame (params: {
+    callFrameId: string
+  }) {
+    return this.send('restartFrame', params)
+  }
+  getScriptSource (params: {
+    scriptId: string
+  }) {
+    return this.send('getScriptSource', params)
+  }
+  setPauseOnExceptions (params: {
+    state: string
+  }) {
     return this.send('setPauseOnExceptions', params)
   }
-  setAsyncCallStackDepth (params: Object) {
+  evaluateOnCallFrame (params: {
+    callFrameId: string,
+    expression: string,
+    objectGroup?: string,
+    includeCommandLineAPI?: boolean,
+    silent?: boolean,
+    returnByValue?: boolean,
+    generatePreview?: boolean
+  }) {
+    return this.send('evaluateOnCallFrame', params)
+  }
+  setVariableValue (params: {
+    scopeNumber: number,
+    variableName: string,
+    newValue: {
+      value?: any,
+      unserializableValue?: string,
+      objectId?: string
+    },
+    callFrameId: string
+  }) {
+    return this.send('setVariableValue', params)
+  }
+  setAsyncCallStackDepth (params: {
+    maxDepth: number
+  }) {
     return this.send('setAsyncCallStackDepth', params)
-  }
-  setBreakpointsActive (params: Object) {
-    return this.send('setBreakpointsActive', params)
-  }
-  setBreakpointByUrl (params: Object) {
-    return this.send('setBreakpointByUrl', params)
-  }
-  removeBreakpoint (params: Object) {
-    return this.send('removeBreakpoint', params)
   }
   setBlackboxPatterns (params: Object) {
     return this.send('setBlackboxPatterns', params)
   }
-  evaluateOnCallFrame (params: Object) {
-    return this.send('evaluateOnCallFrame', params)
-  }
   // events
+  scriptParsed (cb: Function) {
+    return this.addListener('scriptParsed', cb)
+  }
+  scriptFailedToParse (cb: Function) {
+    return this.addListener('scriptFailedToParse', cb)
+  }
+  breakpointResolved (cb: Function) {
+    return this.addListener('breakpointResolved', cb)
+  }
   paused (cb: Function) {
     return this.addListener('paused', cb)
   }
   resumed (cb: Function) {
     return this.addListener('resumed', cb)
   }
-  scriptParsed (cb: Function) {
-    return this.addListener('scriptParsed', cb)
-  }
+
 }
