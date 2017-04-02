@@ -5,11 +5,25 @@ export class ProfilerDomain extends ChromeDebuggingDomain {
   enable () {
     return this.send('enable')
   }
-  setSamplingInterval (params: Object) {
+  disable () {
+    return this.send('disable')
+  }
+  setSamplingInterval (params: {
+    interval: number
+  }) {
     return this.send('setSamplingInterval', params)
   }
-  // // events
-  // messageAdded (cb: Function) {
-  //   return this.requester.send(`${this.domainName}.messageAdded`, cb)
-  // }
+  start () {
+    return this.send('start')
+  }
+  stop () {
+    return this.send('stop')
+  }
+  // events
+  consoleProfileStarted (cb: Function) {
+    return this.addListener('consoleProfileStarted', cb)
+  }
+  consoleProfileFinished (cb: Function) {
+    return this.addListener('consoleProfileFinished', cb)
+  }
 }
