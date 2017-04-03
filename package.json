@@ -1,6 +1,6 @@
 {
   "name": "chrome-debugging-protocol",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "author": "Williams Medina <williams.medinaa@gmail.com>",
   "description": "Chrome Debugging Protocol Client for NodeJS",
   "keywords": [
