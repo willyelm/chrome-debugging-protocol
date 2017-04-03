@@ -15,7 +15,9 @@ export class ChromeDebuggingProtocol {
   constructor (private socketUrl: string,
     options?: ChromeDebuggingProtocolOptions) {
     this.event = new EventEmitter()
-    this.log = Boolean(options.log)
+    if (options) {
+      this.log = Boolean(options.log)
+    }
   }
   didClose (cb) {
     this.event.addListener('didClose', cb)
