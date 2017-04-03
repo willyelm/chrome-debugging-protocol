@@ -3,12 +3,19 @@ import { Domains } from './domain/index'
 import { ChromeDebuggingRequester } from './chrome-debugging-requester'
 import * as WebSocket from 'ws'
 
+export interface ChromeDebuggingProtocolOptions {
+  log: boolean
+}
+
 export class ChromeDebuggingProtocol {
   private socket: WebSocket
   private event: EventEmitter
   private requester: ChromeDebuggingRequester
-  constructor (private socketUrl: string) {
+  private log: boolean
+  constructor (private socketUrl: string,
+    options: ChromeDebuggingProtocolOptions) {
     this.event = new EventEmitter()
+    this.log = Boolean(options.log)
   }
   didClose (cb) {
     this.event.addListener('didClose', cb)
@@ -30,6 +37,9 @@ export class ChromeDebuggingProtocol {
           this.event.emit('didReceiveError', error)
         })
         this.requester = new ChromeDebuggingRequester(this.socket)
+        if (this.log) {
+          this.requester.enableLogging()
+        }
         let domains = this.requester.getDomains()
         resolve(domains)
       })

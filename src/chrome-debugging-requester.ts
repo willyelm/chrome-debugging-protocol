@@ -25,6 +25,7 @@ export class ChromeDebuggingRequester {
   private nextRequestId: number = 0
   private subscriptions: ChromeDebuggingSubscriptions = []
   private domains: Domains
+  private log: boolean = false
   constructor (private socket: WebSocket) {
     this.domains = {
       Console: new ConsoleDomain(this),
@@ -38,6 +39,9 @@ export class ChromeDebuggingRequester {
       this.responseHandler(response)
     })
   }
+  enableLogging () {
+    this.log = true
+  }
   getDomains (): Domains {
     return this.domains
   }
@@ -50,7 +54,7 @@ export class ChromeDebuggingRequester {
         subscription.reject(response.error)
       }
     } else if (response.error) {
-      console.log('unhandled error', response)
+      if (this.log) console.log('unhandled error', response)
     } else {
       let parse = String(response.method).split('.')
       let domainName = parse[0]
@@ -61,7 +65,7 @@ export class ChromeDebuggingRequester {
           testName?: string
         })
       } else {
-        // console.log('unhandled', response)
+        if (this.log) console.log('unhandled method', response)
       }
     }
   }
@@ -80,7 +84,7 @@ export class ChromeDebuggingRequester {
       }
       let body = JSON.stringify(options)
       this.socket.send(body)
-      console.log('sending', body)
+      if (this.log) console.log('sending', body)
       this.nextRequestId++
     })
   }
