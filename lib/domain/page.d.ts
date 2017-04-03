@@ -13,8 +13,9 @@ export declare class PageDomain extends ChromeDebuggingDomain {
         accept: boolean;
         promptText?: string;
     }): Promise<any>;
-    setOverlayMessage(params: {
-        message: string;
+    configureOverlay(params: {
+        suspended?: boolean;
+        message?: string;
     }): Promise<any>;
     domContentEventFired(cb: Function): this;
     loadEventFired(cb: Function): this;
