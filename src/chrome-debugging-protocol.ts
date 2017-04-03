@@ -4,7 +4,7 @@ import { ChromeDebuggingRequester } from './chrome-debugging-requester'
 import * as WebSocket from 'ws'
 
 export interface ChromeDebuggingProtocolOptions {
-  log: boolean
+  log?: boolean
 }
 
 export class ChromeDebuggingProtocol {
@@ -13,7 +13,7 @@ export class ChromeDebuggingProtocol {
   private requester: ChromeDebuggingRequester
   private log: boolean
   constructor (private socketUrl: string,
-    options: ChromeDebuggingProtocolOptions) {
+    options?: ChromeDebuggingProtocolOptions) {
     this.event = new EventEmitter()
     this.log = Boolean(options.log)
   }
