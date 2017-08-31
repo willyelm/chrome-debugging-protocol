@@ -12,6 +12,7 @@ export class ChromeDebuggingProtocol {
   private event: EventEmitter
   private requester: ChromeDebuggingRequester
   private log: boolean
+  private connected: boolean
   constructor (private socketUrl: string,
     options?: ChromeDebuggingProtocolOptions) {
     this.event = new EventEmitter()
@@ -19,17 +20,32 @@ export class ChromeDebuggingProtocol {
       this.log = Boolean(options.log)
     }
   }
-  didClose (cb) {
-    this.event.addListener('didClose', cb)
+  onDidConnect (cb) {
+    return this.event.addListener('didConnect', cb)
   }
-  didReceiveError (cb) {
-    this.event.addListener('didReceiveError', cb)
+  onDidClose (cb) {
+    return this.event.addListener('didClose', cb)
+  }
+  onDidReceiveError (cb) {
+    return this.event.addListener('didReceiveError', cb)
+  }
+  isConnected () {
+    return this.connected
+  }
+  getDomains (): Domains {
+    if (this.isConnected()) {
+      return this.requester.getDomains()
+    } else {
+      throw new Error('Unable to get domains before connection')
+    }
   }
   disconnect () {
     this.socket.close()
+    this.connected = false
     this.event.emit('didClose')
   }
-  connect (): Promise<Domains> {
+  connect (): Promise<boolean> {
+    this.connected = false
     return new Promise((resolve, reject) => {
       this.socket = new WebSocket(this.socketUrl)
       this.socket.on('error', reject)
@@ -42,8 +58,9 @@ export class ChromeDebuggingProtocol {
         if (this.log) {
           this.requester.enableLogging()
         }
-        let domains = this.requester.getDomains()
-        resolve(domains)
+        this.event.emit('didConnect')
+        this.connected = true
+        resolve(this.connected)
       })
       this.socket.on('close', () => this.event.emit('didClose'))
     })
